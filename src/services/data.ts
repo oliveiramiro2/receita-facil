@@ -1,4 +1,26 @@
-export const data = [
+type ingredientes = {
+    id: string;
+    name: string;
+    amount: string;
+}
+
+type instrucoes = {
+    id: string;
+    text: string;
+}
+
+export interface IDataListFood {
+    id: string;
+    name: string;
+    total_ingredients: string;
+    time: number;
+    cover: string;
+    video: string;
+    ingredients: ingredientes[];
+    instructions: instrucoes[];
+}
+
+export const data: IDataListFood[] = [
     {
         id: '1',
         name: 'Strogonoff',

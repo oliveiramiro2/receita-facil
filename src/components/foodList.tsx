@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { IDataListFood } from '../services/data';
 
 const styles = StyleSheet.create({
     contain: {
@@ -7,8 +8,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export const FoodList: React.FC = () => (
+export const FoodList: React.FC<{data: IDataListFood}> = ({ data }) => (
     <View style={[styles.contain]}>
-        <Text>foodList</Text>
+        <Text>{data.name}</Text>
     </View>
 );

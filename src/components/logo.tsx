@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export const Logo = () => (
+export const Logo: React.FC = () => (
     <View style={[styles.contain]}>
         <Text>Receita Fácil</Text>
     </View>

@@ -5,11 +5,13 @@ import {
     View,
     TextInput,
     TouchableOpacity,
+    FlatList,
 } from 'react-native';
 import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 
-import { Logo } from '../components';
+import { FoodList, Logo } from '../components';
+import { data } from '../services/data';
 
 const styles = StyleSheet.create({
     contain: {
@@ -61,6 +63,12 @@ export const Home: React.FC = () => {
                     <Ionicons name="search" size={28} color="#4cbe6c" />
                 </TouchableOpacity>
             </View>
+
+            <FlatList
+                data={data}
+                keyExtractor={(item) => String(item.id)}
+                renderItem={({ item }) => <FoodList data={item} />}
+            />
         </SafeAreaView>
     );
 };
