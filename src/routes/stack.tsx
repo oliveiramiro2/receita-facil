@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Home, Detail, Search } from '../pages';
 
-type stacks = {
+export type stacks = {
     Home: object | undefined;
     Detail: object | undefined;
     Search: object | undefined;

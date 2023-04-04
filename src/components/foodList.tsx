@@ -1,14 +1,11 @@
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableOpacity,
-    Image,
-} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { IDataListFood } from '../services/data';
+import { stacks } from '../routes/stack';
 
 const styles = StyleSheet.create({
     contain: {
@@ -45,18 +42,26 @@ const styles = StyleSheet.create({
     },
 });
 
-export const FoodList: React.FC<{ data: IDataListFood }> = ({ data }) => (
-    <TouchableOpacity activeOpacity={0.9} style={[styles.contain]}>
-        <Image style={[styles.image]} source={{ uri: data.cover }} />
-        <View style={[styles.info]}>
-            <Text style={[styles.title]}>{data.name}</Text>
-            <Text style={[styles.description]}>
-                {data.total_ingredients} | {data.time} min
-            </Text>
-        </View>
-        <LinearGradient
-            style={[styles.gradient]}
-            colors={['transparent', 'rgba(0,0,0,0.7)', 'rgba(0,0,0,0.95)']}
-        />
-    </TouchableOpacity>
-);
+export const FoodList: React.FC<{ data: IDataListFood }> = ({ data }) => {
+    const navigation = useNavigation<NativeStackNavigationProp<stacks>>();
+
+    return (
+        <TouchableOpacity
+            activeOpacity={0.9}
+            style={[styles.contain]}
+            onPress={() => navigation.navigate('Detail', { data })}
+        >
+            <Image style={[styles.image]} source={{ uri: data.cover }} />
+            <View style={[styles.info]}>
+                <Text style={[styles.title]}>{data.name}</Text>
+                <Text style={[styles.description]}>
+                    {data.total_ingredients} | {data.time} min
+                </Text>
+            </View>
+            <LinearGradient
+                style={[styles.gradient]}
+                colors={['transparent', 'rgba(0,0,0,0.7)', 'rgba(0,0,0,0.95)']}
+            />
+        </TouchableOpacity>
+    );
+};
