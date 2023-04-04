@@ -6,6 +6,8 @@ import {
     Image,
 } from 'react-native';
 import React from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
+
 import { IDataListFood } from '../services/data';
 
 const styles = StyleSheet.create({
@@ -31,6 +33,16 @@ const styles = StyleSheet.create({
     description: {
         color: '#fff',
     },
+    gradient: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: '55%',
+        borderRadius: 14,
+        zIndex: 50,
+        backgroundColor: 'transparent',
+    },
 });
 
 export const FoodList: React.FC<{ data: IDataListFood }> = ({ data }) => (
@@ -42,5 +54,9 @@ export const FoodList: React.FC<{ data: IDataListFood }> = ({ data }) => (
                 {data.total_ingredients} | {data.time} min
             </Text>
         </View>
+        <LinearGradient
+            style={[styles.gradient]}
+            colors={['transparent', 'rgba(0,0,0,0.7)', 'rgba(0,0,0,0.95)']}
+        />
     </TouchableOpacity>
 );

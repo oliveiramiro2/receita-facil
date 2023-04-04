@@ -68,6 +68,7 @@ export const Home: React.FC = () => {
                 data={data}
                 keyExtractor={(item) => String(item.id)}
                 renderItem={({ item }) => <FoodList data={item} />}
+                showsVerticalScrollIndicator={false}
             />
         </SafeAreaView>
     );
