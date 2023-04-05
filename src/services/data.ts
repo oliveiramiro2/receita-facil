@@ -1,10 +1,10 @@
-type ingredientes = {
+export type ingredientes = {
     id: string;
     name: string;
     amount: string;
 }
 
-type instrucoes = {
+export type instrucoes = {
     id: string;
     text: string;
 }

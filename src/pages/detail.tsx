@@ -13,6 +13,7 @@ import { Entypo, AntDesign, Feather } from '@expo/vector-icons';
 
 import { IDataListFood } from '../services/data';
 import { stacks } from '../routes/stack';
+import { Ingredients, Instructions } from '../components';
 
 type ParamList = {
     Detail: {
@@ -100,6 +101,11 @@ export const Detail: React.FC = () => {
                     <Feather name="share-2" size={24} color="#121212" />
                 </Pressable>
             </View>
+
+            {route.params?.data.ingredients.map((value) => (
+                <Ingredients data={value} key={value.id} />
+            ))}
+            <Instructions />
         </ScrollView>
     );
 };
