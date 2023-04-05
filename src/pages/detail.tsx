@@ -6,6 +6,7 @@ import {
     ScrollView,
     Image,
     Modal,
+    Share,
 } from 'react-native';
 import React, { useLayoutEffect, useState } from 'react';
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
@@ -95,6 +96,16 @@ export const Detail: React.FC = () => {
         });
     }, [navigation, route.params?.data]);
 
+    const shareFood = async () => {
+        try {
+            await Share.share({
+                message: `Receita: ${route.params?.data.name}\nIngredientes: ${route.params?.data.total_ingredients}\nVi lá no app Receita fácil`,
+            });
+        } finally {
+            /* nothing */
+        }
+    };
+
     return (
         <ScrollView
             contentContainerStyle={{ paddingBottom: 14 }}
@@ -118,7 +129,7 @@ export const Detail: React.FC = () => {
                         Ingredientes ({route.params?.data.total_ingredients})
                     </Text>
                 </View>
-                <Pressable>
+                <Pressable onPress={shareFood}>
                     <Feather name="share-2" size={24} color="#121212" />
                 </Pressable>
             </View>
