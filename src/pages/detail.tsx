@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     contain: {
         backgroundColor: '#f3f9ff',
         paddingVertical: 14,
-        paddingStart: 14,
+        paddingHorizontal: 14,
     },
     image: {
         height: 200,
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 14,
+        paddingHorizontal: 2,
     },
     title: {
         fontSize: 18,
@@ -110,7 +111,7 @@ export const Detail: React.FC = () => {
                         {route.params?.data.name}
                     </Text>
                     <Text style={[styles.ingredientsText]}>
-                        ingredientes ({route.params?.data.total_ingredients})
+                        Ingredientes ({route.params?.data.total_ingredients})
                     </Text>
                 </View>
                 <Pressable>

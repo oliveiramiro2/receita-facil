@@ -7,14 +7,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 8,
         marginBottom: 14,
+        alignItems: 'flex-start',
     },
     number: {
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: 20,
+        position: 'relative',
+        bottom: 5,
     },
     text: {
         lineHeight: 20,
         fontSize: 16,
+        paddingEnd: 20,
     },
 });
 
