@@ -1,8 +1,15 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    Pressable,
+    ScrollView,
+    Image,
+} from 'react-native';
 import React, { useLayoutEffect } from 'react';
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, AntDesign, Feather } from '@expo/vector-icons';
 
 import { IDataListFood } from '../services/data';
 import { stacks } from '../routes/stack';
@@ -15,7 +22,40 @@ type ParamList = {
 
 const styles = StyleSheet.create({
     contain: {
-        flex: 1,
+        backgroundColor: '#f3f9ff',
+        paddingVertical: 14,
+        paddingStart: 14,
+    },
+    image: {
+        height: 200,
+        borderRadius: 14,
+        width: '100%',
+    },
+    playIcon: {
+        position: 'absolute',
+        zIndex: 9,
+        top: 0,
+        left: 0,
+        right: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    headerDetails: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 14,
+    },
+    title: {
+        fontSize: 18,
+        marginTop: 14,
+        fontWeight: 'bold',
+        color: '#000',
+        marginBottom: 4,
+    },
+    ingredientsText: {
+        marginBottom: 14,
+        fontSize: 16,
     },
 });
 
@@ -37,8 +77,29 @@ export const Detail: React.FC = () => {
     }, [navigation, route.params?.data]);
 
     return (
-        <View style={[styles.contain]}>
-            <Text>detail {route.params?.data.name}</Text>
-        </View>
+        <ScrollView style={[styles.contain]}>
+            <Pressable>
+                <View style={[styles.playIcon]}>
+                    <AntDesign name="playcircleo" size={48} color="#fafafa" />
+                </View>
+                <Image
+                    source={{ uri: route.params?.data.cover }}
+                    style={[styles.image]}
+                />
+            </Pressable>
+            <View style={[styles.headerDetails]}>
+                <View>
+                    <Text style={[styles.title]}>
+                        {route.params?.data.name}
+                    </Text>
+                    <Text style={[styles.ingredientsText]}>
+                        ingredientes ({route.params?.data.total_ingredients})
+                    </Text>
+                </View>
+                <Pressable>
+                    <Feather name="share-2" size={24} color="#121212" />
+                </Pressable>
+            </View>
+        </ScrollView>
     );
 };
