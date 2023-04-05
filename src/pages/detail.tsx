@@ -126,7 +126,9 @@ export const Detail: React.FC = () => {
                 <Text style={[styles.instructionText]}>Modo de preparo</Text>
                 <Feather name="arrow-down" size={24} color="#fff" />
             </View>
-            <Instructions />
+            {route.params?.data.instructions.map((value) => (
+                <Instructions data={value} key={value.id} />
+            ))}
         </ScrollView>
     );
 };
