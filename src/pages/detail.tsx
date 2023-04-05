@@ -5,15 +5,16 @@ import {
     Pressable,
     ScrollView,
     Image,
+    Modal,
 } from 'react-native';
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Entypo, AntDesign, Feather } from '@expo/vector-icons';
 
 import { IDataListFood } from '../services/data';
 import { stacks } from '../routes/stack';
-import { Ingredients, Instructions } from '../components';
+import { Ingredients, Instructions, Video } from '../components';
 
 type ParamList = {
     Detail: {
@@ -76,6 +77,8 @@ const styles = StyleSheet.create({
 });
 
 export const Detail: React.FC = () => {
+    const [openModal, setOpenModal] = useState<boolean>(false);
+
     const route = useRoute<RouteProp<ParamList, 'Detail'>>();
     const navigation = useNavigation<NativeStackNavigationProp<stacks>>();
 
@@ -97,7 +100,7 @@ export const Detail: React.FC = () => {
             contentContainerStyle={{ paddingBottom: 14 }}
             style={[styles.contain]}
         >
-            <Pressable>
+            <Pressable onPress={() => setOpenModal(true)}>
                 <View style={[styles.playIcon]}>
                     <AntDesign name="playcircleo" size={48} color="#fafafa" />
                 </View>
@@ -131,6 +134,17 @@ export const Detail: React.FC = () => {
             {route.params?.data.instructions.map((value) => (
                 <Instructions data={value} key={value.id} />
             ))}
+
+            <Modal
+                visible={openModal}
+                onRequestClose={() => setOpenModal(false)}
+                animationType="slide"
+            >
+                <Video
+                    handleClose={setOpenModal}
+                    link={route.params?.data.video}
+                />
+            </Modal>
         </ScrollView>
     );
 };
