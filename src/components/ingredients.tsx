@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
 export const Ingredients: React.FC<{ data: ingredientes }> = ({ data }) => (
     <View style={[styles.contain]}>
         <Text style={[styles.name]}>{data.name}</Text>
-        <Text>{data.amount}g</Text>
+        <Text>{data.amount}</Text>
     </View>
 );
