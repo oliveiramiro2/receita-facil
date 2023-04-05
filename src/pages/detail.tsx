@@ -58,6 +58,19 @@ const styles = StyleSheet.create({
         marginBottom: 14,
         fontSize: 16,
     },
+    instructionArea: {
+        backgroundColor: '#4cbe6c',
+        flexDirection: 'row',
+        padding: 8,
+        borderRadius: 4,
+        marginBottom: 14,
+    },
+    instructionText: {
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#fff',
+        marginRight: 8,
+    },
 });
 
 export const Detail: React.FC = () => {
@@ -78,7 +91,10 @@ export const Detail: React.FC = () => {
     }, [navigation, route.params?.data]);
 
     return (
-        <ScrollView style={[styles.contain]}>
+        <ScrollView
+            contentContainerStyle={{ paddingBottom: 14 }}
+            style={[styles.contain]}
+        >
             <Pressable>
                 <View style={[styles.playIcon]}>
                     <AntDesign name="playcircleo" size={48} color="#fafafa" />
@@ -105,6 +121,11 @@ export const Detail: React.FC = () => {
             {route.params?.data.ingredients.map((value) => (
                 <Ingredients data={value} key={value.id} />
             ))}
+
+            <View style={[styles.instructionArea]}>
+                <Text style={[styles.instructionText]}>Modo de preparo</Text>
+                <Feather name="arrow-down" size={24} color="#fff" />
+            </View>
             <Instructions />
         </ScrollView>
     );
