@@ -19,7 +19,7 @@ export const saveFavorite = async (key: string, newItem: any) => {
     await AsyncStorage.setItem(key, JSON.stringify(myFavorites));
 };
 
-export const removeFavorite = async (id: number) => {
+export const removeFavorite = async (id: string) => {
     const receive = await getFavorite('@appreceitas');
 
     const myFavorites = receive.filter((item: any) => item.id === id);

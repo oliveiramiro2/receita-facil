@@ -16,6 +16,7 @@ import { Entypo, AntDesign, Feather } from '@expo/vector-icons';
 import { IDataListFood } from '../services/data';
 import { stacks } from '../routes/stack';
 import { Ingredients, Instructions, Video } from '../components';
+import { isFavorite, removeFavorite, saveFavorite } from '../utils/async';
 
 type ParamList = {
     Detail: {
@@ -79,22 +80,43 @@ const styles = StyleSheet.create({
 
 export const Detail: React.FC = () => {
     const [openModal, setOpenModal] = useState<boolean>(false);
+    const [favorite, setFavorite] = useState<boolean>(false);
 
     const route = useRoute<RouteProp<ParamList, 'Detail'>>();
     const navigation = useNavigation<NativeStackNavigationProp<stacks>>();
 
+    const handleFavorite = async () => {
+        if (favorite) {
+            await removeFavorite(route.params?.data.id);
+            setFavorite(false);
+            return;
+        }
+        await saveFavorite('@appreceitas', route.params?.data);
+        setFavorite(true);
+    };
+
     useLayoutEffect(() => {
+        const statusFavorites = async () => {
+            const receiveFavorites = await isFavorite(route.params?.data);
+            setFavorite(receiveFavorites);
+        };
+        statusFavorites();
+
         navigation.setOptions({
             title: route.params?.data
                 ? route.params?.data.name
                 : 'Detalhes da receita',
             headerRight: () => (
-                <Pressable>
-                    <Entypo name="heart" size={28} color="#ff4141" />
+                <Pressable onPress={handleFavorite}>
+                    <Entypo
+                        name={favorite ? 'heart' : 'heart-outlined'}
+                        size={28}
+                        color="#ff4141"
+                    />
                 </Pressable>
             ),
         });
-    }, [navigation, route.params?.data]);
+    }, [navigation, route.params?.data, favorite]);
 
     const shareFood = async () => {
         try {
