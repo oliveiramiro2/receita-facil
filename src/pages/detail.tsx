@@ -12,6 +12,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Entypo, AntDesign, Feather } from '@expo/vector-icons';
+import { useToast } from 'react-native-toast-notifications';
 
 import { IDataListFood } from '../services/data';
 import { stacks } from '../routes/stack';
@@ -84,15 +85,28 @@ export const Detail: React.FC = () => {
 
     const route = useRoute<RouteProp<ParamList, 'Detail'>>();
     const navigation = useNavigation<NativeStackNavigationProp<stacks>>();
+    const toast = useToast();
 
     const handleFavorite = async () => {
         if (favorite) {
             await removeFavorite(route.params?.data.id);
             setFavorite(false);
+            toast.show('Receita desfavoritada com sucesso', {
+                type: 'success',
+                placement: 'center',
+                duration: 4000,
+                animationType: 'zoom-in',
+            });
             return;
         }
         await saveFavorite('@appreceitas', route.params?.data);
         setFavorite(true);
+        toast.show('Receita favoritada com sucesso', {
+            type: 'success',
+            placement: 'center',
+            duration: 4000,
+            animationType: 'zoom-in',
+        });
     };
 
     useLayoutEffect(() => {
