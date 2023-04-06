@@ -102,7 +102,9 @@ export const Home: React.FC = () => {
             <FlatList
                 data={data}
                 keyExtractor={(item) => String(item.id)}
-                renderItem={({ item }) => <FoodList data={item} />}
+                renderItem={({ item, index }) => (
+                    <FoodList data={item} index={index} />
+                )}
                 showsVerticalScrollIndicator={false}
             />
         </SafeAreaView>

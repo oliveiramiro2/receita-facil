@@ -51,10 +51,12 @@ export const Favorites: React.FC = () => {
                 </View>
             ) : (
                 <FlatList
-                    showsVerticalScrollIndicator
+                    showsVerticalScrollIndicator={false}
                     data={receive}
                     keyExtractor={(item) => String(item.id)}
-                    renderItem={({ item }) => <FoodList data={item} />}
+                    renderItem={({ item, index }) => (
+                        <FoodList data={item} index={index} />
+                    )}
                     style={{ marginTop: 14 }}
                 />
             )}

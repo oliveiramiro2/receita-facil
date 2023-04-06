@@ -3,6 +3,7 @@ import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { View as MotiView } from 'moti';
 
 import { IDataListFood } from '../services/data';
 import { stacks } from '../routes/stack';
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export const FoodList: React.FC<{ data: IDataListFood }> = ({ data }) => {
+export const FoodList: React.FC<{ data: IDataListFood, index: number }> = ({ data, index }) => {
     const navigation = useNavigation<NativeStackNavigationProp<stacks>>();
 
     return (
@@ -51,17 +52,31 @@ export const FoodList: React.FC<{ data: IDataListFood }> = ({ data }) => {
             style={[styles.contain]}
             onPress={() => navigation.navigate('Detail', { data })}
         >
-            <Image style={[styles.image]} source={{ uri: data.cover }} />
-            <View style={[styles.info]}>
-                <Text style={[styles.title]}>{data.name}</Text>
-                <Text style={[styles.description]}>
-                    {data.total_ingredients} | {data.time} min
-                </Text>
-            </View>
-            <LinearGradient
-                style={[styles.gradient]}
-                colors={['transparent', 'rgba(0,0,0,0.7)', 'rgba(0,0,0,0.95)']}
-            />
+            <MotiView
+                from={{ opacity: 0, translateX: -100 }}
+                animate={{ opacity: 1, translateX: 0 }}
+                transition={{
+                    delay: 300 * Number(index),
+                    type: 'timing',
+                    duration: 650,
+                }}
+            >
+                <Image style={[styles.image]} source={{ uri: data.cover }} />
+                <View style={[styles.info]}>
+                    <Text style={[styles.title]}>{data.name}</Text>
+                    <Text style={[styles.description]}>
+                        {data.total_ingredients} | {data.time} min
+                    </Text>
+                </View>
+                <LinearGradient
+                    style={[styles.gradient]}
+                    colors={[
+                        'transparent',
+                        'rgba(0,0,0,0.7)',
+                        'rgba(0,0,0,0.95)',
+                    ]}
+                />
+            </MotiView>
         </TouchableOpacity>
     );
 };
