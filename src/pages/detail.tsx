@@ -8,11 +8,12 @@ import {
     Modal,
     Share,
 } from 'react-native';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, useMemo } from 'react';
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Entypo, AntDesign, Feather } from '@expo/vector-icons';
 import { useToast } from 'react-native-toast-notifications';
+import { MotiPressable } from 'moti/interactions';
 
 import { IDataListFood } from '../services/data';
 import { stacks } from '../routes/stack';
@@ -92,9 +93,9 @@ export const Detail: React.FC = () => {
             await removeFavorite(route.params?.data.id);
             setFavorite(false);
             toast.show('Receita desfavoritada com sucesso', {
-                type: 'success',
+                type: 'warning',
                 placement: 'center',
-                duration: 4000,
+                duration: 2000,
                 animationType: 'zoom-in',
             });
             return;
@@ -104,7 +105,7 @@ export const Detail: React.FC = () => {
         toast.show('Receita favoritada com sucesso', {
             type: 'success',
             placement: 'center',
-            duration: 4000,
+            duration: 2000,
             animationType: 'zoom-in',
         });
     };
@@ -121,13 +122,26 @@ export const Detail: React.FC = () => {
                 ? route.params?.data.name
                 : 'Detalhes da receita',
             headerRight: () => (
-                <Pressable onPress={handleFavorite}>
+                <MotiPressable
+                    onPress={handleFavorite}
+                    animate={useMemo(
+                        () =>
+                            ({ pressed }) => {
+                                'worklet';
+
+                                return {
+                                    scale: pressed ? 0 : 1,
+                                };
+                            },
+                        []
+                    )}
+                >
                     <Entypo
                         name={favorite ? 'heart' : 'heart-outlined'}
                         size={28}
                         color="#ff4141"
                     />
-                </Pressable>
+                </MotiPressable>
             ),
         });
     }, [navigation, route.params?.data, favorite]);
