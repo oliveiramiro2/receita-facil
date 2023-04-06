@@ -1,17 +1,27 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { IDataListFood } from '../services/data';
 
 export const getFavorite = async (key: string) => {
     const favorites = await AsyncStorage.getItem(key);
-    return JSON.parse(favorites || '');
+    if (favorites !== null) {
+        return JSON.parse(favorites);
+    }
+    return false;
 };
 
-export const saveFavorite = async (key: string, newItem: any) => {
-    const myFavorites = await getFavorite(key);
+export const saveFavorite = async (key: string, newItem: IDataListFood) => {
+    let myFavorites = await getFavorite(key);
 
-    const hasItem = myFavorites.some((item: any) => item.id === newItem.id);
+    if (myFavorites) {
+        const hasItem = myFavorites.some(
+            (item: IDataListFood) => item.id === newItem.id,
+        );
 
-    if (hasItem) {
-        return;
+        if (hasItem) {
+            return;
+        }
+    } else {
+        myFavorites = [];
     }
 
     myFavorites.push(newItem);
@@ -22,17 +32,21 @@ export const saveFavorite = async (key: string, newItem: any) => {
 export const removeFavorite = async (id: string) => {
     const receive = await getFavorite('@appreceitas');
 
-    const myFavorites = receive.filter((item: any) => item.id === id);
+    const myFavorites = receive.filter((item: IDataListFood) => item.id !== id);
 
     await AsyncStorage.setItem('@appreceitas', JSON.stringify(myFavorites));
 
     return myFavorites;
 };
 
-export const isFavorite = async (favorite: any) => {
+export const isFavorite = async (favorite: IDataListFood) => {
     const receive = await getFavorite('@appreceitas');
 
-    const favorites = receive.find((item: any) => item.id === favorite.id);
+    if (!receive) return false;
+
+    const favorites = receive.find(
+        (item: IDataListFood) => item.id === favorite.id,
+    );
 
     if (favorites) return true;
 
