@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Text as MotiText } from 'moti';
 import React from 'react';
 
 const styles = StyleSheet.create({
@@ -24,6 +25,16 @@ const styles = StyleSheet.create({
 
 export const Logo: React.FC = () => (
     <View style={[styles.contain]}>
-        <Text style={[styles.logoText]}>Receita Fácil</Text>
+        <MotiText
+            style={[styles.logoText]}
+            from={{ opacity: 0, translateX: -50 }}
+            animate={{ opacity: 1, translateX: 0 }}
+            transition={{
+                type: 'timing',
+                duration: 900,
+            }}
+        >
+            Receita Fácil
+        </MotiText>
     </View>
 );
